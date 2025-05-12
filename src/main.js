@@ -37,7 +37,6 @@ async function handleFormSubmit(event) {
 
   try {
     const data = await getImagesByQuery(query, page);
-    console.log(data.totalHits);
 
     if (data.hits.length === 0) {
       iziToast.warning({
@@ -54,6 +53,7 @@ async function handleFormSubmit(event) {
     }
 
     createGallery(data.hits);
+
     // addAnimationToCards(); // animation
     simpleLightbox.refresh();
   } catch (error) {
@@ -86,9 +86,16 @@ async function handleLodMoreBtnClick() {
     }
 
     createGallery(data.hits);
+    const galleryItem = document.querySelector('.js-gallery-item');
+    const elementHeight = galleryItem.getBoundingClientRect().height;
+    window.scrollBy({
+      top: elementHeight * 3 + 50,
+      behavior: 'smooth',
+    });
 
     // addAnimationToCards(); // animation
     simpleLightbox.refresh();
+    console.log(galeryItem);
   } catch (error) {
     iziToast.error({
       position: 'topRight',

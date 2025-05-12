@@ -19,7 +19,7 @@ function createGallery(images) {
         comments,
         downloads,
       }) =>
-        `<li class="gallery-item">
+        `<li class="gallery-item js-gallery-item">
                 <div>
                   <a href="${largeImageURL}" class="image-link">
                     <img
