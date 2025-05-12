@@ -25,11 +25,11 @@ form input::placeholder {
   color: #808080;
 }
 
-form button {
+button {
   border-radius: 4px;
   border: none;
   padding: 8px 16px;
-  width: 91px;
+  min-width: 90px;
   background: #3b2cde;
   color: whitesmoke;
 }

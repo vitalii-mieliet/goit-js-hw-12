@@ -12,13 +12,18 @@ import {
 
 const formEl = document.querySelector('.js-form');
 const loader = document.querySelector('.js-loader');
+const loadMoreBtn = document.querySelector('#load-more-button');
+
+let query = '';
+let page = 1;
 
 formEl.addEventListener('submit', handleFormSubmit);
+loadMoreBtn.addEventListener('click', handleLodMoreBtnClick);
 
 async function handleFormSubmit(event) {
   event.preventDefault();
 
-  const query = event.target.elements['search-text'].value.trim();
+  query = event.target.elements['search-text'].value.trim();
   if (query === '') {
     iziToast.warning({
       position: 'topRight',
@@ -30,7 +35,7 @@ async function handleFormSubmit(event) {
   showLoader(loader);
 
   try {
-    const data = await getImagesByQuery(query);
+    const data = await getImagesByQuery(query, page);
 
     if (data.hits.length === 0) {
       iziToast.warning({
@@ -43,6 +48,30 @@ async function handleFormSubmit(event) {
     }
 
     createGallery(data.hits);
+    addAnimationToCards(); // animation
+    simpleLightbox.refresh();
+  } catch (error) {
+    iziToast.error({
+      position: 'topRight',
+      message: `ERROR: ${error}`,
+    });
+  } finally {
+    hideLoader(loader);
+    formEl.reset();
+  }
+}
+
+// ======================
+
+async function handleLodMoreBtnClick() {
+  showLoader(loader);
+
+  try {
+    page += 1;
+    const data = await getImagesByQuery(query, page);
+
+    createGallery(data.hits);
+
     addAnimationToCards(); // animation
     simpleLightbox.refresh();
   } catch (error) {

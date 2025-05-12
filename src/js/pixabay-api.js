@@ -7,7 +7,7 @@ const params = {
   safesearch: true,
 };
 
-export async function getImagesByQuery(query) {
+export async function getImagesByQuery(query, page) {
   try {
     const res = await axios('', {
       params: {
@@ -16,8 +16,11 @@ export async function getImagesByQuery(query) {
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: true,
+        per_page: 15,
+        page,
       },
     });
+
     return res.data;
   } catch (error) {
     return error;

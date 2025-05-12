@@ -5,10 +5,10 @@ const simpleLightbox = new SimpleLightbox('.js-gallery .image-link', {
   captionsData: 'alt',
   captionDelay: 250,
 });
-const gallery = document.querySelector('.js-gallery');
+const galleryEl = document.querySelector('.js-gallery');
 
 function createGallery(images) {
-  gallery.innerHTML = images
+  const gallery = images
     .map(
       ({
         tags,
@@ -52,14 +52,20 @@ function createGallery(images) {
               </li>`
     )
     .join('');
+
+  galleryEl.insertAdjacentHTML('beforeend', gallery);
 }
+
 function clearGallery() {
-  gallery.innerHTML = '';
+  galleryEl.innerHTML = '';
 }
+
 function showLoader(element) {
   element.classList.remove('hidden');
 }
+
 function hideLoader(element) {
   element.classList.add('hidden');
 }
+
 export { createGallery, clearGallery, showLoader, hideLoader, simpleLightbox };
