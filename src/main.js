@@ -95,7 +95,6 @@ async function handleLodMoreBtnClick() {
 
     // addAnimationToCards(); // animation
     simpleLightbox.refresh();
-    console.log(galeryItem);
   } catch (error) {
     iziToast.error({
       position: 'topRight',
