@@ -5,8 +5,8 @@ import { getImagesByQuery } from './js/pixabay-api';
 import {
   createGallery,
   clearGallery,
-  showLoader,
-  hideLoader,
+  showElement,
+  hideElement,
   simpleLightbox,
 } from './js/render-functions';
 
@@ -31,11 +31,13 @@ async function handleFormSubmit(event) {
     });
     return;
   }
+  hideElement(loadMoreBtn);
   clearGallery();
-  showLoader(loader);
+  showElement(loader);
 
   try {
     const data = await getImagesByQuery(query, page);
+    console.log(data.totalHits);
 
     if (data.hits.length === 0) {
       iziToast.warning({
@@ -47,8 +49,12 @@ async function handleFormSubmit(event) {
       return;
     }
 
+    if (data.totalHits > 15) {
+      showElement(loadMoreBtn);
+    }
+
     createGallery(data.hits);
-    addAnimationToCards(); // animation
+    // addAnimationToCards(); // animation
     simpleLightbox.refresh();
   } catch (error) {
     iziToast.error({
@@ -56,7 +62,7 @@ async function handleFormSubmit(event) {
       message: `ERROR: ${error}`,
     });
   } finally {
-    hideLoader(loader);
+    hideElement(loader);
     formEl.reset();
   }
 }
@@ -64,15 +70,19 @@ async function handleFormSubmit(event) {
 // ======================
 
 async function handleLodMoreBtnClick() {
-  showLoader(loader);
+  showElement(loader);
 
   try {
     page += 1;
+
     const data = await getImagesByQuery(query, page);
+    if (page * 15 >= data.totalHits) {
+      hideElement(loadMoreBtn);
+    }
 
     createGallery(data.hits);
 
-    addAnimationToCards(); // animation
+    // addAnimationToCards(); // animation
     simpleLightbox.refresh();
   } catch (error) {
     iziToast.error({
@@ -80,18 +90,18 @@ async function handleLodMoreBtnClick() {
       message: `ERROR: ${error}`,
     });
   } finally {
-    hideLoader(loader);
+    hideElement(loader);
     formEl.reset();
   }
 }
 
 // ======================
 
-function addAnimationToCards() {
-  const cards = document.querySelectorAll('.gallery-item');
-  cards.forEach((card, index) => {
-    setTimeout(() => {
-      card.classList.add('show');
-    }, index * 100); // Задержка между появлением карточек
-  });
-}
+// function addAnimationToCards() {
+//   const cards = document.querySelectorAll('.gallery-item');
+//   cards.forEach((card, index) => {
+//     setTimeout(() => {
+//       card.classList.add('show');
+//     }, index * 100); // Задержка между появлением карточек
+//   });
+// }

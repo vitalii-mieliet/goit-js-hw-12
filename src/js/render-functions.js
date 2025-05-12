@@ -60,12 +60,18 @@ function clearGallery() {
   galleryEl.innerHTML = '';
 }
 
-function showLoader(element) {
+function showElement(element) {
   element.classList.remove('hidden');
 }
 
-function hideLoader(element) {
+function hideElement(element) {
   element.classList.add('hidden');
 }
 
-export { createGallery, clearGallery, showLoader, hideLoader, simpleLightbox };
+export {
+  createGallery,
+  clearGallery,
+  showElement,
+  hideElement,
+  simpleLightbox,
+};
