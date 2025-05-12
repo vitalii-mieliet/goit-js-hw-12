@@ -112,6 +112,11 @@ img {
   color: rgb(95, 176, 223);
 }
 
+.load-button {
+  display: block;
+  margin: 10px auto;
+}
+
 .hidden {
   display: none;
 }
