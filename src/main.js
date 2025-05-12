@@ -15,7 +15,7 @@ const loader = document.querySelector('.js-loader');
 
 formEl.addEventListener('submit', handleFormSubmit);
 
-function handleFormSubmit(event) {
+async function handleFormSubmit(event) {
   event.preventDefault();
 
   const query = event.target.elements['search-text'].value.trim();
@@ -29,33 +29,31 @@ function handleFormSubmit(event) {
   clearGallery();
   showLoader(loader);
 
-  getImagesByQuery(query)
-    .then(data => {
-      if (data.hits.length === 0) {
-        iziToast.warning({
-          position: 'topRight',
-          message:
-            'Sorry, there are no images matching your search query. Please try again!',
-        });
-        clearGallery();
-        return;
-      }
+  try {
+    const data = await getImagesByQuery(query);
 
-      createGallery(data.hits);
-      addAnimationToCards(); // animation
-      simpleLightbox.refresh();
-    })
-    .catch(error => {
-      console.log(error);
-      iziToast.error({
+    if (data.hits.length === 0) {
+      iziToast.warning({
         position: 'topRight',
-        message: `ERROR: ${error}`,
+        message:
+          'Sorry, there are no images matching your search query. Please try again!',
       });
-    })
-    .finally(() => {
-      hideLoader(loader);
-      formEl.reset();
+      clearGallery();
+      return;
+    }
+
+    createGallery(data.hits);
+    addAnimationToCards(); // animation
+    simpleLightbox.refresh();
+  } catch (error) {
+    iziToast.error({
+      position: 'topRight',
+      message: `ERROR: ${error}`,
     });
+  } finally {
+    hideLoader(loader);
+    formEl.reset();
+  }
 }
 
 // ======================

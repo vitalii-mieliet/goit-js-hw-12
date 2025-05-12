@@ -7,16 +7,19 @@ const params = {
   safesearch: true,
 };
 
-export function getImagesByQuery(query) {
-  return axios('', {
-    params: {
-      q: query,
-      key: '50190409-57f653f3b13017a76580224dc',
-      image_type: 'photo',
-      orientation: 'horizontal',
-      safesearch: true,
-    },
-  })
-    .then(res => res.data)
-    .catch(error => error);
+export async function getImagesByQuery(query) {
+  try {
+    const res = await axios('', {
+      params: {
+        q: query,
+        key: '50190409-57f653f3b13017a76580224dc',
+        image_type: 'photo',
+        orientation: 'horizontal',
+        safesearch: true,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
 }
