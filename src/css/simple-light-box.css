@@ -1,0 +1,14 @@
+
+body .sl-overlay {
+    background: rgba(46, 47, 66);
+  }
+  
+  body .sl-wrapper {
+    .sl-close,
+    .sl-counter,
+    .sl-navigation button {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      color: #fff;
+    }
+  }
