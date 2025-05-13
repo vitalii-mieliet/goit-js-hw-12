@@ -23,6 +23,8 @@ loadMoreBtn.addEventListener('click', handleLoadMoreBtnClick);
 async function handleFormSubmit(event) {
   event.preventDefault();
 
+  page = 1;
+
   query = event.target.elements['search-text'].value.trim();
   if (query === '') {
     iziToast.warning({
@@ -77,7 +79,6 @@ async function handleLoadMoreBtnClick() {
 
     const data = await getImagesByQuery(query, page);
     if (page * 15 >= data.totalHits) {
-      page = 1;
       hideElement(loadMoreBtn);
       iziToast.info({
         position: 'topRight',
