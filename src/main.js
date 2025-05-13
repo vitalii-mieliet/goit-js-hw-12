@@ -1,7 +1,7 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-import { getImagesByQuery } from './js/pixabay-api';
+import { getImagesByQuery, PixabayApi } from './js/pixabay-api';
 import {
   createGallery,
   clearGallery,
@@ -10,12 +10,17 @@ import {
   simpleLightbox,
 } from './js/render-functions';
 
+const api = new PixabayApi();
+
 const formEl = document.querySelector('.js-form');
 const loader = document.querySelector('.js-loader');
 const loadMoreBtn = document.querySelector('#load-more-button');
 
+const PAGE_SIZE = 15;
+
 let query = '';
 let page = 1;
+let lastPage = 1;
 
 formEl.addEventListener('submit', handleFormSubmit);
 loadMoreBtn.addEventListener('click', handleLoadMoreBtnClick);
