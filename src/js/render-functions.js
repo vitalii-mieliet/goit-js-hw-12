@@ -8,7 +8,7 @@ const simpleLightbox = new SimpleLightbox('.js-gallery .image-link', {
 const galleryEl = document.querySelector('.js-gallery');
 
 function createGallery(images) {
-  const gallery = images
+  const markup = images
     .map(
       ({
         tags,
@@ -53,7 +53,7 @@ function createGallery(images) {
     )
     .join('');
 
-  galleryEl.insertAdjacentHTML('beforeend', gallery);
+  galleryEl.insertAdjacentHTML('beforeend', markup);
 }
 
 function clearGallery() {

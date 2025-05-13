@@ -1,8 +1,5 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://pixabay.com/api/';
-
-// !===============================================
 export class PixabayApi {
   #BASE_URL = 'https://pixabay.com/api/';
   #API_KEY = '50190409-57f653f3b13017a76580224dc';
@@ -11,9 +8,9 @@ export class PixabayApi {
   #per_page = 15;
   #total_pages = 1;
 
-  async getImagesByQuery(query, page) {
+  async getImagesByQuery() {
     try {
-      const res = await axios('', {
+      const res = await axios.get(this.#BASE_URL, {
         params: {
           q: this.#query,
           key: this.#API_KEY,
@@ -21,14 +18,19 @@ export class PixabayApi {
           orientation: 'horizontal',
           safesearch: true,
           per_page: this.#per_page,
-          page,
+          page: this.#page,
         },
       });
+      this.calculateTotalPages(res.data.totalHits);
 
       return res.data;
     } catch (error) {
       return error;
     }
+  }
+
+  calculateTotalPages(totalHits) {
+    this.totalPages = Math.max(1, Math.ceil(totalHits / this.#per_page));
   }
 
   set query(newQuery) {
@@ -42,25 +44,27 @@ export class PixabayApi {
   set totalPages(newTotalPages) {
     this.#total_pages = newTotalPages;
   }
-}
-// !===============================================
 
-export async function getImagesByQuery(query, page) {
-  try {
-    const res = await axios('', {
-      params: {
-        q: query,
-        key: '50190409-57f653f3b13017a76580224dc',
-        image_type: 'photo',
-        orientation: 'horizontal',
-        safesearch: true,
-        per_page: 15,
-        page,
-      },
-    });
+  get query() {
+    return this.#query;
+  }
 
-    return res.data;
-  } catch (error) {
-    return error;
+  get page() {
+    return this.#page;
+  }
+
+  get per_page() {
+    return this.#per_page;
+  }
+  get totalPages() {
+    return this.#total_pages;
+  }
+
+  nextPage() {
+    return (this.#page += 1);
+  }
+
+  resetPage() {
+    this.#page = 1;
   }
 }
