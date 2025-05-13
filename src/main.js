@@ -52,10 +52,11 @@ async function handleFormSubmit(event) {
     }
 
     createGallery(data.hits);
+    const newCards = document.querySelectorAll('.gallery-item:not(.show)');
+    addAnimationToCards(newCards);
+
     checkBtnStatus();
     simpleLightbox.refresh();
-
-    // addAnimationToCards(); // animation
   } catch (error) {
     iziToast.error({
       position: 'topRight',
@@ -85,11 +86,12 @@ async function handleLoadMoreBtnClick() {
     }
 
     createGallery(data.hits);
+    const newCards = document.querySelectorAll('.gallery-item:not(.show)');
+    addAnimationToCards(newCards);
+
     scrollToNewItems();
     checkBtnStatus();
     simpleLightbox.refresh();
-
-    // addAnimationToCards(); // animation
   } catch (error) {
     iziToast.error({
       position: 'topRight',
@@ -121,11 +123,10 @@ function scrollToNewItems() {
 
 // ======================
 
-// function addAnimationToCards() {
-//   const cards = document.querySelectorAll('.gallery-item');
-//   cards.forEach((card, index) => {
-//     setTimeout(() => {
-//       card.classList.add('show');
-//     }, index * 100); // Задержка между появлением карточек
-//   });
-// }
+function addAnimationToCards(newCards) {
+  newCards.forEach((card, index) => {
+    setTimeout(() => {
+      card.classList.add('show');
+    }, index * 100);
+  });
+}
