@@ -41,12 +41,13 @@ async function handleFormSubmit(event) {
     const data = await api.getImagesByQuery();
     //? const data = await getImagesByQuery(query, page);
 
-    if (data.hits.length === 0) {
+    if (!data.hits.length) {
       iziToast.warning({
         position: 'topRight',
         message:
           'Sorry, there are no images matching your search query. Please try again!',
       });
+      checkBtnStatus();
       clearGallery();
       return;
     }
