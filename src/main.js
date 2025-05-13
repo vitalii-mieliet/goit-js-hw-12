@@ -18,7 +18,7 @@ let query = '';
 let page = 1;
 
 formEl.addEventListener('submit', handleFormSubmit);
-loadMoreBtn.addEventListener('click', handleLodMoreBtnClick);
+loadMoreBtn.addEventListener('click', handleLoadMoreBtnClick);
 
 async function handleFormSubmit(event) {
   event.preventDefault();
@@ -69,7 +69,7 @@ async function handleFormSubmit(event) {
 
 // ======================
 
-async function handleLodMoreBtnClick() {
+async function handleLoadMoreBtnClick() {
   showElement(loader);
 
   try {
