@@ -89,7 +89,7 @@ async function handleLodMoreBtnClick() {
     const galleryItem = document.querySelector('.js-gallery-item');
     const elementHeight = galleryItem.getBoundingClientRect().height;
     window.scrollBy({
-      top: elementHeight * 3 + 50,
+      top: elementHeight * 3 + 22,
       behavior: 'smooth',
     });
 
