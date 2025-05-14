@@ -64,7 +64,9 @@ export class PixabayApi {
     return (this.#page += 1);
   }
 
-  resetPage() {
+  reset() {
+    this.#query = '';
     this.#page = 1;
+    this.#total_pages = 1;
   }
 }

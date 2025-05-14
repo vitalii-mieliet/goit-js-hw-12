@@ -22,7 +22,7 @@ loadMoreBtn.addEventListener('click', handleLoadMoreBtnClick);
 async function handleFormSubmit(event) {
   event.preventDefault();
 
-  api.resetPage();
+  api.reset();
 
   api.query = event.target.elements['search-text'].value.trim();
 
@@ -31,6 +31,9 @@ async function handleFormSubmit(event) {
       position: 'topRight',
       message: 'Please enter the correct query!',
     });
+    checkBtnStatus();
+    clearGallery();
+
     return;
   }
 
@@ -53,11 +56,11 @@ async function handleFormSubmit(event) {
     }
 
     createGallery(data.hits);
-    const newCards = document.querySelectorAll('.gallery-item:not(.show)');
-    addAnimationToCards(newCards);
-
     checkBtnStatus();
     simpleLightbox.refresh();
+
+    const newCards = document.querySelectorAll('.gallery-item:not(.show)');
+    addAnimationToCards(newCards);
   } catch (error) {
     iziToast.error({
       position: 'topRight',
@@ -114,9 +117,9 @@ function checkBtnStatus() {
 function scrollToNewItems() {
   const galleryItem = document.querySelector('.js-gallery-item');
   if (galleryItem) {
-    const elementHeight = galleryItem.getBoundingClientRect().height;
+    const galleryItemHeight = galleryItem.getBoundingClientRect().height;
     window.scrollBy({
-      top: elementHeight * 3 + 22,
+      top: galleryItemHeight * 3 + 22,
       behavior: 'smooth',
     });
   }
@@ -128,6 +131,6 @@ function addAnimationToCards(newCards) {
   newCards.forEach((card, index) => {
     setTimeout(() => {
       card.classList.add('show');
-    }, index * 100);
+    }, index * 150);
   });
 }
